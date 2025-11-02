@@ -28,22 +28,11 @@ public class ToDoController {
     }
 
     // Lấy todos theo user - ADMIN xem được mọi user, USER chỉ xem của mình
+    @PreAuthorize("#id==principal.id or hasRole('ADMIN')")
     @GetMapping("/user/{id}")
     public ResponseEntity<Page<ToDo>> getTodoByUser(@PathVariable Long id,
                                                     @RequestParam(defaultValue = "0") int page,
                                                     @RequestParam(defaultValue = "10") int size) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String currentUsername = auth.getName();
-
-        Optional<User> currentUser = userService.getUserByUsername(currentUsername);
-
-        boolean isAdmin = auth.getAuthorities().stream()
-                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
-
-        // USER chỉ xem được todos của mình
-        if (!isAdmin && currentUser.isPresent() && !currentUser.get().getId().equals(id)) {
-            return ResponseEntity.status(403).build();
-        }
 
         Page<ToDo> toDoPage = toDoService.getTodosByUser(id, PageRequest.of(page, size));
         return ResponseEntity.ok(toDoPage);

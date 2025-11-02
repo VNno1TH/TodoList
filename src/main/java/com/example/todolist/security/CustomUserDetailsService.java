@@ -1,5 +1,4 @@
-package com.example.todolist.service;
-
+package com.example.todolist.security;
 
 import com.example.todolist.entity.Role;
 import com.example.todolist.entity.User;
@@ -26,11 +25,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         User user = userRepository.findUserByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
 
-        return new org.springframework.security.core.userdetails.User(
-                user.getUsername(),
-                user.getPassword(),
-                getAuthorities(user)
-        );
+        return new CustomUserDetails(user);
     }
 
     private Collection<? extends GrantedAuthority> getAuthorities(User user) {
