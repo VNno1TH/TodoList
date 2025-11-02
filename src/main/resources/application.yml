@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: ToDoList
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/todo_db
+    username: root
+    password: "16082004huyLoL@"
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    defer-datasource-initialization: true   # 🔥 thêm dòng này
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+
+  sql:
+    init:
+      mode: always
