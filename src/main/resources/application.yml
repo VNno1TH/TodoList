@@ -12,7 +12,7 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
-    defer-datasource-initialization: true   # 🔥 thêm dòng này
+    defer-datasource-initialization: true  
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
